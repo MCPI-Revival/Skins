@@ -6,7 +6,7 @@ import Jimp from 'jimp';
 // Contants
 const REPO_OWNER = 'MCPI-Revival';
 const REPO_NAME = 'Skins';
-const REPO_BRANCH = 'hdata';
+const REPO_BRANCH = 'data';
 const SKIN_WIDTH = 64;
 const SKIN_HEIGHT = 32;
 
