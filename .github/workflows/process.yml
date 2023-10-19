@@ -1,0 +1,27 @@
+name: Process Issue
+
+on:
+    issues:
+        types:
+          - opened
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+        steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v3
+          - name: Setup NodeJS
+            uses: actions/setup-node@v3
+            with:
+                node-version: 18
+          - name: Install Dependencies
+            run: npm install
+          - name: Process Issue
+            run: npm run
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                GITHUB_EVENT: ${{ toJson(github.event) }}
