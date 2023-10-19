@@ -5,36 +5,29 @@ import { uploadSkin } from './upload';
 // Main
 (async function () {
     try {
-        // Validate Issue User
-        const validIssueUser = event.issue.user.email !== null && event.issue.user.name !== null;
-        if (!validIssueUser) {
-            // Invalid User
-            finish('Invalid issue author!');
+        // Process Issue Body
+        if (event.issue.body === null) {
+            // Empty Body
+            await finish('Empty issue body!');
         } else {
-            // Process Issue Body
-            if (event.issue.body === null) {
-                // Empty Body
-                await finish('Empty issue body!');
-            } else {
-                // Pick Mode
-                const deleteMode = event.issue.body.trim() === 'DELETE-SKIN';
-                // Log
-                console.log(`MODE: ${deleteMode ? 'Delete Skin' : 'Uplaod Skin'}`);
+            // Pick Mode
+            const deleteMode = event.issue.body.trim() === 'DELETE-SKIN';
+            // Log
+            console.log(`MODE: ${deleteMode ? 'Delete Skin' : 'Uplaod Skin'}`);
 
-                // Run
-                if (deleteMode) {
-                    // Delete Skin
-                    await deleteSkin();
-                } else {
-                    // Upload Skin
-                    await uploadSkin();
-                }
+            // Run
+            if (deleteMode) {
+                // Delete Skin
+                await deleteSkin();
+            } else {
+                // Upload Skin
+                await uploadSkin();
             }
         }
     } catch (e) {
         // Log
         console.log(`ERROR: ${e instanceof Error ? e.stack : e}`);
-        
+
         // Error
         await finish('An unexpected error has occurred!');
     }

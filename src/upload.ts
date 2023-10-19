@@ -14,11 +14,7 @@ async function uploadSkinFile(data: string) {
         message: `Upload Skin: ${getFilename()}`,
         content: data,
         ...(sha !== undefined && {sha: sha}),
-        branch: REPO_BRANCH,
-        committer: {
-            name: event.issue.user.name!,
-            email: event.issue.user.email!
-        }
+        branch: REPO_BRANCH
     });
 
     // Success
