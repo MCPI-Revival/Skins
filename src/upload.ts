@@ -28,14 +28,10 @@ async function processSkin(imageUrl: string) {
     console.log(`IMAGE: ${imageUrl}`);
 
     // Download Image
-    const response = await fetch(imageUrl, {
-        headers: {
-            Authorization: `Bearer ${process.env['GITHUB_TOKEN']}`
-        }
-    });
+    const response = await fetch(imageUrl);
     if (response.status !== 200) {
         // Failed To Download Image
-        finish('Unable to downlaod skin!');
+        await finish('Unable to downlaod skin!');
         return;
     }
     const arrayBuffer = await response.arrayBuffer();
