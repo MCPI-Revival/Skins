@@ -2,26 +2,41 @@ import { event, finish } from './common';
 import { deleteSkin } from './delete';
 import { uploadSkin } from './upload';
 
+// Capitalize First Letter Of String
+function capitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 // Main
 (async function () {
     try {
         // Process Issue Body
-        if (event.issue.body === null) {
+        if (!event.issue.body) {
             // Empty Body
             await finish('Empty issue body!');
         } else {
             // Pick Mode
-            const deleteMode = event.issue.body.trim() === 'DELETE-SKIN';
+            let mode: string | null = null;
+            if (event.issue.labels) {
+                for (const label of event.issue.labels) {
+                    mode = label.name.toLowerCase();
+                    break;
+                }
+            }
             // Log
-            console.log(`MODE: ${deleteMode ? 'Delete Skin' : 'Uplaod Skin'}`);
+            const modeStr = mode ? `${capitalizeFirstLetter(mode)} Skin` : 'None';
+            console.log(`MODE: ${modeStr}`);
 
             // Run
-            if (deleteMode) {
+            if (mode === 'delete') {
                 // Delete Skin
                 await deleteSkin();
-            } else {
+            } else if (mode === 'upload') {
                 // Upload Skin
                 await uploadSkin();
+            } else {
+                // Invalid Mode
+                await finish('Invalid mode!');
             }
         }
     } catch (e) {
