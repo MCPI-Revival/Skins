@@ -1,17 +1,17 @@
-import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, path, filename, octokit, finish, result, SKIN_WIDTH, SKIN_HEIGHT } from './common';
+import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, getFilename, octokit, finish, result, SKIN_WIDTH, SKIN_HEIGHT } from './common';
 import Jimp from 'jimp';
 
 // Uplaod Skin
 async function uploadSkinFile(data: string) {
     // Get Existing File (If It Exists)
-    const sha = await getSha(path);
+    const sha = await getSha(getPath());
 
     // Create File
     await octokit.rest.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
         repo: REPO_NAME,
-        path: path,
-        message: `Upload Skin: ${filename}`,
+        path: getPath(),
+        message: `Upload Skin: ${getFilename()}`,
         content: data,
         ...(sha !== undefined && {sha: sha}),
         branch: REPO_BRANCH,

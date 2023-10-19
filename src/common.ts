@@ -10,11 +10,16 @@ export const SKIN_WIDTH = 64;
 export const SKIN_HEIGHT = 32;
 
 // Parse Arguments
+console.log(`DEBUG: ${process.env['GITHUB_EVENT']}`);
 export const event: IssuesOpenedEvent = JSON.parse(process.env['GITHUB_EVENT']!);
 
 // Get File Name
-export const filename = Buffer.from(event.issue.user.name!).toString('base64');
-export const path = filename + '.png';
+export function getFilename() {
+    return Buffer.from(event.issue.user.name!).toString('base64');
+}
+export function getPath() {
+    return `${getFilename()}.png`;
+}
 
 // Track Success
 export const result = {

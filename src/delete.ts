@@ -1,9 +1,9 @@
-import { getSha, path, octokit, REPO_OWNER, REPO_NAME, filename, REPO_BRANCH, event, finish, result } from './common';
+import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, getFilename, REPO_BRANCH, event, finish, result } from './common';
 
 // Delete Skin
 export async function deleteSkin() {
     // Get Existing File (If It Exists)
-    const sha = await getSha(path);
+    const sha = await getSha(getPath());
 
     // Check If File Exists
     if (sha !== undefined) {
@@ -11,8 +11,8 @@ export async function deleteSkin() {
         await octokit.rest.repos.deleteFile({
             owner: REPO_OWNER,
             repo: REPO_NAME,
-            path: path,
-            message: `Delete Skin: ${filename}`,
+            path: getPath(),
+            message: `Delete Skin: ${getFilename()}`,
             sha: sha,
             branch: REPO_BRANCH,
             committer: {
