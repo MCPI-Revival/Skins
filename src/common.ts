@@ -20,11 +20,6 @@ export function getPath() {
     return `${getFilename()}.png`;
 }
 
-// Track Success
-export const result = {
-    success: false
-};
-
 // Connect
 export const octokit = new Octokit({
     authStrategy: createActionAuth

@@ -1,4 +1,4 @@
-import { event, finish, result } from './common';
+import { event, finish } from './common';
 import { deleteSkin } from './delete';
 import { uploadSkin } from './upload';
 
@@ -30,8 +30,8 @@ import { uploadSkin } from './upload';
 
         // Error
         await finish('An unexpected error has occurred!');
-    }
 
-    // Exit
-    process.exit(result.success ? 0 : 1);
+        // Exit
+        process.exit(1);
+    }
 })();

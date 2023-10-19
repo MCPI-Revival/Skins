@@ -1,4 +1,4 @@
-import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, REPO_BRANCH, finish, result, event } from './common';
+import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, REPO_BRANCH, finish, event } from './common';
 
 // Delete Skin
 export async function deleteSkin() {
@@ -19,9 +19,8 @@ export async function deleteSkin() {
 
         // Success
         await finish('Skin successfully deleted!');
-        result.success = true;
     } else {
         // Doesn't Exist
-        finish('Skin does not exist!');
+        await finish('Skin does not exist!');
     }
 }

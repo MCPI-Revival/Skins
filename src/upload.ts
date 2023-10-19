@@ -1,4 +1,4 @@
-import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, result, SKIN_WIDTH, SKIN_HEIGHT } from './common';
+import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, SKIN_WIDTH, SKIN_HEIGHT } from './common';
 import Jimp from 'jimp';
 
 // Uplaod Skin
@@ -19,7 +19,6 @@ async function uploadSkinFile(data: string) {
 
     // Success
     await finish('Skin successfully uploaded!');
-    result.success = true;
 }
 
 // Handle Skin
@@ -41,7 +40,7 @@ async function processSkin(imageUrl: string) {
     const image = await Jimp.read(buffer);
     if (image.getWidth() != SKIN_WIDTH || image.getHeight() != SKIN_HEIGHT) {
         // Incorrect Size
-        finish(`Skins must be ${SKIN_WIDTH}x${SKIN_HEIGHT} pixels!`);
+        await finish(`Skins must be ${SKIN_WIDTH}x${SKIN_HEIGHT} pixels!`);
         return;
     }
 
