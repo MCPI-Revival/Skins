@@ -1,4 +1,4 @@
-import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, SKIN_WIDTH, SKIN_HEIGHT } from './common';
+import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, SKIN_WIDTH, SKIN_HEIGHT, SIZE_LIMIT } from './common';
 import Jimp from 'jimp';
 
 // Uplaod Skin
@@ -48,6 +48,12 @@ async function processSkin(imageUrl: string) {
     image.rgba(true);
     const buffer2 = await image.getBufferAsync(Jimp.MIME_PNG);
     const data = buffer2.toString('base64');
+
+    // Size Limit
+    if (buffer2.length > SIZE_LIMIT) {
+        await finish(`Skins must be less than or equal to ${SIZE_LIMIT / 1000} KB!`);
+        return;
+    }
 
     // Upload
     await uploadSkinFile(data);

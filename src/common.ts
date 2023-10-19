@@ -8,6 +8,7 @@ export const REPO_NAME = 'Skins';
 export const REPO_BRANCH = 'data';
 export const SKIN_WIDTH = 64;
 export const SKIN_HEIGHT = 32;
+export const SIZE_LIMIT = 8000;
 
 // Parse Arguments
 export const event: IssuesOpenedEvent = JSON.parse(process.env['GITHUB_EVENT']!);
