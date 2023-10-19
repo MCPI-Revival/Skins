@@ -1,4 +1,4 @@
-import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, getFilename, REPO_BRANCH, finish, result } from './common';
+import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, REPO_BRANCH, finish, result, event } from './common';
 
 // Delete Skin
 export async function deleteSkin() {
@@ -12,7 +12,7 @@ export async function deleteSkin() {
             owner: REPO_OWNER,
             repo: REPO_NAME,
             path: getPath(),
-            message: `Delete Skin: ${getFilename()}`,
+            message: `Delete Skin: @${event.issue.user.login}`,
             sha: sha,
             branch: REPO_BRANCH
         });

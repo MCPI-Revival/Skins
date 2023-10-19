@@ -13,7 +13,7 @@ export const SKIN_HEIGHT = 32;
 export const event: IssuesOpenedEvent = JSON.parse(process.env['GITHUB_EVENT']!);
 
 // Get File Name
-export function getFilename() {
+function getFilename() {
     return Buffer.from(event.issue.user.login).toString('base64');
 }
 export function getPath() {

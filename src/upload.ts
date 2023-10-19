@@ -1,4 +1,4 @@
-import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, getFilename, octokit, finish, result, SKIN_WIDTH, SKIN_HEIGHT } from './common';
+import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, result, SKIN_WIDTH, SKIN_HEIGHT } from './common';
 import Jimp from 'jimp';
 
 // Uplaod Skin
@@ -11,7 +11,7 @@ async function uploadSkinFile(data: string) {
         owner: REPO_OWNER,
         repo: REPO_NAME,
         path: getPath(),
-        message: `Upload Skin: ${getFilename()}`,
+        message: `Upload Skin: @${event.issue.user.login}`,
         content: data,
         ...(sha !== undefined && {sha: sha}),
         branch: REPO_BRANCH
@@ -29,8 +29,11 @@ async function processSkin(imageUrl: string) {
 
     // Download Image
     const response = await fetch(imageUrl);
+    console.log(`DEBUG A: ${response}`);
     const arrayBuffer = await response.arrayBuffer();
+    console.log(`DEBUG B: ${arrayBuffer}`);
     const buffer = Buffer.from(arrayBuffer);
+    console.log(`DEBUG C: ${buffer}`);
 
     // Check Image Size
     const image = await Jimp.read(buffer);
