@@ -28,12 +28,18 @@ async function processSkin(imageUrl: string) {
     console.log(`IMAGE: ${imageUrl}`);
 
     // Download Image
-    const response = await fetch(imageUrl);
-    console.log(`DEBUG A: ${response}`);
+    const response = await fetch(imageUrl, {
+        headers: {
+            Authorization: `Bearer ${process.env['GITHUB_TOKEN']}`
+        }
+    });
+    if (response.status !== 200) {
+        // Failed To Download Image
+        finish('Unable to downlaod skin!');
+        return;
+    }
     const arrayBuffer = await response.arrayBuffer();
-    console.log(`DEBUG B: ${arrayBuffer}`);
     const buffer = Buffer.from(arrayBuffer);
-    console.log(`DEBUG C: ${buffer}`);
 
     // Check Image Size
     const image = await Jimp.read(buffer);
