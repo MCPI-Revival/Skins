@@ -1,5 +1,2 @@
 /build
-/package-lock.json
 /node_modules
-/openapi.json
-/openapitools.json

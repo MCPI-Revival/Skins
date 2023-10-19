@@ -55,7 +55,7 @@ export async function uploadSkin() {
     let imageUrl: string | null = null;
     for (let line of event.issue.body!.split('\n')) {
         line = line.trim();
-        if (line.startsWith('![') && line.endsWith(']')) {
+        if (line.startsWith('![') && line.endsWith(')')) {
             // Markdown Image
             const urlStartIndicator = '](';
             let urlStart = line.indexOf(urlStartIndicator);
