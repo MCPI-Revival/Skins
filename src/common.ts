@@ -10,6 +10,14 @@ export const SKIN_WIDTH = 64;
 export const SKIN_HEIGHT = 32;
 export const SIZE_LIMIT = 8000;
 
+// Reserved Usernames
+export const RESERVED_USERNAMES = [
+    'Steve',
+    'StevePi',
+    'Alex',
+    'AlexPi'
+];
+
 // Parse Arguments
 export const event: IssuesOpenedEvent = JSON.parse(process.env['GITHUB_EVENT']!);
 
