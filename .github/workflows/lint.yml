@@ -1,0 +1,25 @@
+name: Lint
+
+on:
+on:
+    push:
+        branches:
+          - master
+    pull_request:
+        branches:
+          - master
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v3
+          - name: Setup NodeJS
+            uses: actions/setup-node@v3
+            with:
+                node-version: 18
+          - name: Install Dependencies
+            run: npm ci
+          - name: Lint
+            run: npm run lint
