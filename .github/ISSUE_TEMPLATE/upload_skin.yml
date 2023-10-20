@@ -4,13 +4,13 @@ description: Upload A New Skin
 labels:
   - upload
 body:
-  - type: markdown
-    attributes:
-        value: Submit this issue to upload your skin!
   - type: textarea
     attributes:
         label: Upload Skin
-        description: 'Upload your new skin into the following text field:'
+        description: |
+            Submit this issue to upload your skin!
+
+            Upload your new skin into the following text field:
         placeholder: '![char](https://github.com/MCPI-Revival/Skins/assets/17478432/ba044b65-a116-4434-a240-0da5d4f633fe)'
     validations:
         required: true

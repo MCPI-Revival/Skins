@@ -4,10 +4,8 @@ description: Delete Your Current Skin
 labels:
   - delete
 body:
-  - type: markdown
-    attributes:
-        value: Submit this issue to delete your current skin!
   - type: checkboxes
     attributes:
         label: Delete Skin
+        description: Submit this issue to delete your current skin!
         options: []
