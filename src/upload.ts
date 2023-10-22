@@ -45,6 +45,7 @@ async function processSkin(imageUrl: string) {
     }
 
     // Save
+    image.opaque();
     image.rgba(true);
     const buffer2 = await image.getBufferAsync(Jimp.MIME_PNG);
     const data = buffer2.toString('base64');
