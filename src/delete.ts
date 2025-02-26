@@ -1,4 +1,4 @@
-import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, REPO_BRANCH, finish, event } from './common';
+import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, REPO_BRANCH, finish, event } from './common.js';
 
 // Delete Skin
 export async function deleteSkin() {

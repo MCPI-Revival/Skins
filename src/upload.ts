@@ -1,5 +1,5 @@
-import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, SKIN_WIDTH, SKIN_HEIGHT, SIZE_LIMIT } from './common';
-import Jimp from 'jimp';
+import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, SKIN_WIDTH, SKIN_HEIGHT, SIZE_LIMIT } from './common.js';
+import { Jimp, JimpMime, PNGColorType } from 'jimp';
 
 // Uplaod Skin
 async function uploadSkinFile(data: string) {
@@ -38,21 +38,20 @@ async function processSkin(imageUrl: string) {
 
     // Check Image Size
     const image = await Jimp.read(buffer);
-    if (image.getWidth() != SKIN_WIDTH || image.getHeight() != SKIN_HEIGHT) {
+    if (image.width !== SKIN_WIDTH || image.height !== SKIN_HEIGHT) {
         // Incorrect Size
-        await finish(`Skins must be ${SKIN_WIDTH}x${SKIN_HEIGHT} pixels!`);
+        await finish(`Skins must be ${SKIN_WIDTH.toString()}x${SKIN_HEIGHT.toString()} pixels!`);
         return;
     }
 
     // Save
     image.opaque();
-    image.rgba(true);
-    const buffer2 = await image.getBufferAsync(Jimp.MIME_PNG);
+    const buffer2 = await image.getBuffer(JimpMime.png, {colorType: PNGColorType.COLOR_ALPHA});
     const data = buffer2.toString('base64');
 
     // Size Limit
     if (buffer2.length > SIZE_LIMIT) {
-        await finish(`Skins must be less than or equal to ${SIZE_LIMIT / 1000} KB!`);
+        await finish(`Skins must be less than or equal to ${(SIZE_LIMIT / 1000).toString()} KB!`);
         return;
     }
 
@@ -64,7 +63,7 @@ async function processSkin(imageUrl: string) {
 export async function uploadSkin() {
     // Find Skin
     let imageUrl: string | null = null;
-    for (let line of event.issue.body!.split('\n')) {
+    for (let line of (event.issue.body ?? '').split('\n')) {
         line = line.trim();
         if (line.startsWith('![') && line.endsWith(')')) {
             // Markdown Image

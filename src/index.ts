@@ -1,6 +1,6 @@
-import { RESERVED_USERNAMES, event, finish } from './common';
-import { deleteSkin } from './delete';
-import { uploadSkin } from './upload';
+import { RESERVED_USERNAMES, event, finish } from './common.js';
+import { deleteSkin } from './delete.js';
+import { uploadSkin } from './upload.js';
 
 // Capitalize First Letter Of String
 function capitalizeFirstLetter(str: string) {
@@ -8,6 +8,7 @@ function capitalizeFirstLetter(str: string) {
 }
 
 // Main
+/* eslint @typescript-eslint/no-floating-promises: 'off' */
 (async function () {
     try {
         // Reserved Usernames
@@ -47,7 +48,11 @@ function capitalizeFirstLetter(str: string) {
         }
     } catch (e) {
         // Log
-        console.log(`ERROR: ${e instanceof Error ? e.stack : e}`);
+        let message = 'Unknown';
+        if (e instanceof Error && e.stack) {
+            message = e.stack;
+        }
+        console.log(`ERROR: ${message}`);
 
         // Error
         await finish('An unexpected error has occurred!');

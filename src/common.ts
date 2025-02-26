@@ -19,11 +19,11 @@ export const RESERVED_USERNAMES = [
 ];
 
 // Parse Arguments
-export const event: IssuesOpenedEvent = JSON.parse(process.env['GITHUB_EVENT']!);
+export const event = JSON.parse(process.env['GITHUB_EVENT'] ?? '') as IssuesOpenedEvent;
 
 // Get File Name
 function getFilename() {
-    return Buffer.from(event.issue.user.login).toString('base64');
+    return Buffer.from(event.issue.user.login).toString('base64url');
 }
 export function getPath() {
     return `${getFilename()}.png`;
@@ -81,9 +81,10 @@ export async function getSha(path: string) {
         }
     } catch (e) {
         // Ignore Error
+        void e;
     }
     // Log
-    console.log(`EXISTING FILE SHA: ${sha !== undefined ? sha : 'N/A'}`);
+    console.log(`EXISTING FILE SHA: ${sha ?? 'N/A'}`);
 
     // Return
     return sha;
