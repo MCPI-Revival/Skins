@@ -2,7 +2,7 @@ import { Octokit } from '@octokit/rest';
 import { IssuesOpenedEvent } from '@octokit/webhooks-types';
 import { createActionAuth } from '@octokit/auth-action';
 
-// Contants
+// Constants
 export const REPO_OWNER = 'MCPI-Revival';
 export const REPO_NAME = 'Skins';
 export const REPO_BRANCH = 'data';
@@ -10,24 +10,8 @@ export const SKIN_WIDTH = 64;
 export const SKIN_HEIGHT = 32;
 export const SIZE_LIMIT = 8000;
 
-// Reserved Usernames
-export const RESERVED_USERNAMES = [
-    'Steve',
-    'StevePi',
-    'Alex',
-    'AlexPi'
-];
-
 // Parse Arguments
 export const event = JSON.parse(process.env['GITHUB_EVENT'] ?? '') as IssuesOpenedEvent;
-
-// Get File Name
-function getFilename() {
-    return Buffer.from(event.issue.user.login).toString('base64url');
-}
-export function getPath() {
-    return `${getFilename()}.png`;
-}
 
 // Connect
 export const octokit = new Octokit({

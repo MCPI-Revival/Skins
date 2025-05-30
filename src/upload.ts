@@ -1,7 +1,8 @@
-import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, getPath, octokit, finish, SKIN_WIDTH, SKIN_HEIGHT, SIZE_LIMIT } from './common.js';
+import { event, REPO_OWNER, REPO_NAME, REPO_BRANCH, getSha, octokit, finish, SKIN_WIDTH, SKIN_HEIGHT, SIZE_LIMIT } from './common.js';
 import { Jimp, JimpMime, PNGColorType } from 'jimp';
+import { getPath, githubUsername } from './usernames.js';
 
-// Uplaod Skin
+// Upload Skin
 async function uploadSkinFile(data: string) {
     // Get Existing File (If It Exists)
     const sha = await getSha(getPath());
@@ -11,9 +12,9 @@ async function uploadSkinFile(data: string) {
         owner: REPO_OWNER,
         repo: REPO_NAME,
         path: getPath(),
-        message: `Upload Skin: @${event.issue.user.login}`,
+        message: `Upload Skin: @${githubUsername}`,
         content: data,
-        ...(sha !== undefined && {sha: sha}),
+        ...(sha !== undefined && {sha}),
         branch: REPO_BRANCH
     });
 
@@ -30,7 +31,7 @@ async function processSkin(imageUrl: string) {
     const response = await fetch(imageUrl);
     if (response.status !== 200) {
         // Failed To Download Image
-        await finish('Unable to downlaod skin!');
+        await finish('Unable to download skin!');
         return;
     }
     const arrayBuffer = await response.arrayBuffer();
@@ -59,7 +60,7 @@ async function processSkin(imageUrl: string) {
     await uploadSkinFile(data);
 }
 
-// Uplaod Skin
+// Upload Skin
 export async function uploadSkin() {
     // Find Skin
     let imageUrl: string | null = null;

@@ -1,4 +1,5 @@
-import { getSha, getPath, octokit, REPO_OWNER, REPO_NAME, REPO_BRANCH, finish, event } from './common.js';
+import { getSha, octokit, REPO_OWNER, REPO_NAME, REPO_BRANCH, finish } from './common.js';
+import { getPath, githubUsername } from './usernames.js';
 
 // Delete Skin
 export async function deleteSkin() {
@@ -12,7 +13,7 @@ export async function deleteSkin() {
             owner: REPO_OWNER,
             repo: REPO_NAME,
             path: getPath(),
-            message: `Delete Skin: @${event.issue.user.login}`,
+            message: `Delete Skin: @${githubUsername}`,
             sha: sha,
             branch: REPO_BRANCH
         });
