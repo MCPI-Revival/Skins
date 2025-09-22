@@ -66,24 +66,34 @@ export async function uploadSkin() {
     let imageUrl: string | null = null;
     for (let line of (event.issue.body ?? '').split('\n')) {
         line = line.trim();
-        if (line.startsWith('![') && line.endsWith(')')) {
-            // Markdown Image
-            const urlStartIndicator = '](';
-            let urlStart = line.indexOf(urlStartIndicator);
-            if (urlStart !== -1) {
-                urlStart += urlStartIndicator.length;
-                const urlEnd = line.length - 1;
-                if (urlEnd > urlStart) {
-                    line = line.substring(urlStart, urlEnd);
-                }
+        // Find URL
+        for (let protocol of ['http', 'https']) {
+            // Find Start Of URL
+            protocol += '://';
+            const start = line.indexOf(protocol);
+            if (start === -1) {
+                continue;
             }
+            // Find End Of URL
+            let end = line.length;
+            for (const possibleEnding of [')', '"']) {
+                const index = line.indexOf(possibleEnding, start);
+                if (index === -1) {
+                    continue;
+                }
+                end = Math.min(end, index);
+            }
+            // Get Substring
+            imageUrl = line.substring(start, end);
+            break;
         }
-        if (line.startsWith('http://') || line.startsWith('https://')) {
-            // Found Image
-            imageUrl = line;
+        // Check If URL Was Found
+        if (imageUrl) {
             break;
         }
     }
+
+    // Process URL
     if (imageUrl === null) {
         // Could Not Find Image
         await finish('Unable to find skin in issue body!');
