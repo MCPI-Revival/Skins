@@ -7,7 +7,8 @@ import { event } from './common.js';
 //
 // Request an entry in this map on Discord.
 export const GITHUB_USERNAME_TO_MC = new Map<string, string>([
-    ['Red-exe-Engineer', 'Wallee']
+    ['Red-exe-Engineer', 'Wallee'],
+    ['simonafield', 'TBLLT']
 ]);
 
 // Reserved Usernames
